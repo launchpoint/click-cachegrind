@@ -1,0 +1,49 @@
+.panel
+  %table
+    %tr
+      %td Path
+      %td 
+        =$grind->http_request_method
+        =$grind->uri
+    %tr
+      %td Execution Duration
+      %td 
+        =$grind->execution_duration
+        ms
+    %tr
+      %td GET Params
+      %td
+        -if (count($grind->get_vars)>0)
+          %table
+            %tr
+              %th Name
+              %th Value
+            -foreach($grind->get_vars as $k=>$v)
+              %tr
+                %td
+                  =$k
+                %td
+                  =htmlentities($v)
+        -else
+          None
+    %tr
+      %td POST Params
+      %td
+        -if (count($grind->post_vars)>0)
+          %table
+            %tr
+              %th Name
+              %th Value
+            -foreach($grind->post_vars as $k=>$v)
+              %tr
+                %td
+                  =$k
+                %td
+                  =htmlentities($v)
+        -else
+          None
+    %tr
+      %td Call Tree
+      %td
+        %a{:href=>dot_to_png($grind->dot_file_name()), :target=>"_blank"}
+          =image_thumb(dot_to_png($grind->dot_file_name()), 'width', 320, 'height', 200, 'zoomcrop', false)

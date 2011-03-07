@@ -1,0 +1,24 @@
+.panel
+  .title
+    Cachegrinds
+  .body
+    - if (count($grinds)>0)
+      %table
+        %tr
+          %th Date
+          %th URL
+          %th Method
+          %th Time (msec)
+          %th
+        - foreach($grinds as $grind)
+          %tr
+            %td{:style=>'white-space:nowrap'}
+              =ago($grind->created_at);
+            %td
+              +urldecode($grind->uri)
+            %td
+              +$grind->http_request_method
+            %td
+              +$grind->execution_duration
+            %td
+              =link_to('view', "view/{$grind->id}")
